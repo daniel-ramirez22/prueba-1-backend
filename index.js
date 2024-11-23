@@ -1,12 +1,10 @@
-import express from 'express';
+import express from "express";
+import databaseConnection from "./db/config.js";
+const app = express();
 
-const app = express ();
+const PORT = 5001; // siendo tomada desde el .env
 
-app.get("/test",(req,res)=>{
-    res.send("hola")
-})
-
-app.listen(5000,()=>{
-    console.log(`Servidor corriendo en el http://localhost:${5000}`);
-
-})
+databaseConnection();
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en el http://localhost:${PORT}`);
+});
