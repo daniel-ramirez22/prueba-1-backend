@@ -1,4 +1,8 @@
-import { getUsers } from "../services/user.services.js";
+import {
+  getUsers,
+  createUser,
+  loginServices,
+} from "../services/user.services.js";
 
 export async function listUsers(req,res) {
   try {
@@ -9,4 +13,25 @@ export async function listUsers(req,res) {
   }
 }
 
-export default {listUsers}
+//Create
+export async function createNewUser(req, res) {
+  try {
+    const userData = req.body;
+    const user = await createUser(userData);
+    res.status(201).json(user);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+//Login
+
+export async function loginUser(req, res) {
+  try {
+    const user = req.body;
+    const token = await loginServices(user);
+    res.status(200).json({ token: token });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}

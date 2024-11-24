@@ -1,11 +1,15 @@
 import express from "express";
-import { listUsers } from "../controllers/user.controllers.js";
+import { createNewUser, listUsers, loginUser} from "../controllers/user.controllers.js";
 const router = express.Router();
 
-router.get("/get-users", (req, res) => {
-  res.send([]);
+router.get('/test', (req, res) => {
+  res.send('Test route');
 });
 
-router.get("/get-users", listUsers);
+//Rutas publicas
+router.get('/get-users', listUsers);
 
+
+router.post('/create-user', createNewUser);
+router.post('/login',loginUser);
 export default router;
