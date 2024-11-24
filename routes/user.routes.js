@@ -1,6 +1,11 @@
-import express from "express"
+import express from "express";
+import { listUsers } from "../controllers/user.controllers.js";
 const router = express.Router();
 
-router.get('/get-users',[])
+router.get("/get-users", (req, res) => {
+  res.send([]);
+});
 
-export default router
+router.get("/get-users", listUsers);
+
+export default router;
