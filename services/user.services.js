@@ -55,6 +55,18 @@ export async function deleteUser(email) {
   }
 }
 
+export async function deleteAll() {
+  try {
+    const result = await Users.deleteMany({});
+
+    if (result.deletedCount === 0) {
+      return "No hay usuarios para eliminar";
+    }
+    return "Todos los usuarios han sido eliminados exitosamente";
+  } catch (error) {
+    throw new Error(`Error al eliminar todos los usuarios: ${error.message}`);
+  }
+}
 
 export async function updateUser(email, newData) {
   try {

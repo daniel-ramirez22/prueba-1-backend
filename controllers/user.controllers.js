@@ -4,10 +4,10 @@ import {
   loginServices,
   deleteUser,
   updateUser,
-  
+  deleteAll
 } from "../services/user.services.js";
 
-export async function listUsers(req,res) {
+export async function listUsers(req, res) {
   try {
     const users = await getUsers();
     res.status(200).json(users);
@@ -41,10 +41,10 @@ export async function loginUser(req, res) {
 
 //Delete one
 
-export async function deleteUserById(req,res){
+export async function deleteUserById(req, res) {
   try {
-    const {email} = req.params;
-    const result = await deleteUser(email)
+    const { email } = req.params;
+    const result = await deleteUser(email);
     res.status(201).json(result);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -52,6 +52,16 @@ export async function deleteUserById(req,res){
 }
 
 //Delete All
+export async function deleteAllUsers(req, res) {
+  try {
+    const result = await deleteAll(); 
+    
+    res.status(200).json({ message: result }); 
+  } catch (error) {
+    res.status(500).json({ message: error.message }); 
+  }
+}
+
 
 
 
@@ -59,17 +69,16 @@ export async function deleteUserById(req,res){
 export async function updateUserById(req, res) {
   try {
     const { email } = req.params;
-    const newData = req.body; 
+    const newData = req.body;
 
-    const result = await updateUser(email, newData); 
+    const result = await updateUser(email, newData);
 
-   
     if (result === "El usuario no existe") {
       return res.status(404).json({ message: result });
     }
 
-    res.status(200).json({ message: result }); 
+    res.status(200).json({ message: result });
   } catch (error) {
-    res.status(500).json({ message: error.message }); 
+    res.status(500).json({ message: error.message });
   }
 }
