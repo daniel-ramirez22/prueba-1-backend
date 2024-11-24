@@ -42,6 +42,20 @@ export async function loginServices(user) {
   }
 }
 
+export async function deleteUser(email) {
+  try {
+    const userInDB = await Users.findOne({ email });
+    if (!userInDB) {
+      return "El usuario no existe";
+    }
+    await Users.deleteOne ({email});
+    return 'Usuario eliminado exitosamente'
+  } catch (error) {
+    throw new Error(`Error al eliminar el usuario: ${error.message}`);
+  }
+  
+}
+
 // export async function getUsersById(email) {
 //   try {
 //     const users = await Users.findOne({ email });
