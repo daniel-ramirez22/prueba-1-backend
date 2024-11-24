@@ -3,6 +3,8 @@ import {
   createUser,
   loginServices,
   deleteUser,
+  updateUser,
+  
 } from "../services/user.services.js";
 
 export async function listUsers(req,res) {
@@ -37,7 +39,7 @@ export async function loginUser(req, res) {
   }
 }
 
-//Delete
+//Delete one
 
 export async function deleteUserById(req,res){
   try {
@@ -46,5 +48,28 @@ export async function deleteUserById(req,res){
     res.status(201).json(result);
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+}
+
+//Delete All
+
+
+
+//UPDATE
+export async function updateUserById(req, res) {
+  try {
+    const { email } = req.params;
+    const newData = req.body; 
+
+    const result = await updateUser(email, newData); 
+
+   
+    if (result === "El usuario no existe") {
+      return res.status(404).json({ message: result });
+    }
+
+    res.status(200).json({ message: result }); 
+  } catch (error) {
+    res.status(500).json({ message: error.message }); 
   }
 }

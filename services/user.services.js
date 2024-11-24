@@ -48,12 +48,29 @@ export async function deleteUser(email) {
     if (!userInDB) {
       return "El usuario no existe";
     }
-    await Users.deleteOne ({email});
-    return 'Usuario eliminado exitosamente'
+    await Users.deleteOne({ email });
+    return "Usuario eliminado exitosamente";
   } catch (error) {
     throw new Error(`Error al eliminar el usuario: ${error.message}`);
   }
-  
+}
+
+
+export async function updateUser(email, newData) {
+  try {
+    const userInDB = await Users.findOne({ email });
+
+    if (!userInDB) {
+      return "El usuario no existe";
+    }
+    const updatedUser = await Users.updateOne({ email }, { $set: newData });
+    if (updatedUser.modifiedCount === 0) {
+      return "No se han realizado cambios en el usuario";
+    }
+    return "Usuario actualizado exitosamente";
+  } catch (error) {
+    throw new Error(`Error al actualizar el usuario: ${error.message}`);
+  }
 }
 
 // export async function getUsersById(email) {
